@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>WeatherX | Weather Dashboard</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="app-container">
+
+        <!-- HEADER -->
+        <header class="top-bar">
+
+            <div class="logo">
+                <span class="logo-icon">☁️</span>
+                <span>Weather<span class="logo-highlight">X</span></span>
+            </div>
+
+            <div class="live-status">
+                <span class="status-dot"></span>
+                LIVE WEATHER
+            </div>
+
+        </header>
+
+
+        <!-- SEARCH SECTION -->
+        <section class="search-section">
+
+            <div>
+
+                <p class="small-title">
+                    WEATHER DASHBOARD
+                </p>
+
+                <h1>
+                    Discover the weather<br>
+                    <span>around you.</span>
+                </h1>
+
+                <p class="subtitle">
+                    Get real-time weather information
+                    for any city in the world.
+                </p>
+
+            </div>
+
+
+            <div class="search-box">
+
+                <span class="search-icon">⌕</span>
+
+                <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="Search city..."
+                    autocomplete="off"
+                >
+
+                <button onclick="getWeather()">
+                    Search
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ERROR MESSAGE -->
+        <div id="errorMessage" class="error-message"></div>
+
+
+        <!-- WEATHER DASHBOARD -->
+        <section id="weatherDashboard" class="dashboard hidden">
+
+
+            <!-- MAIN WEATHER CARD -->
+            <div class="main-weather-card">
+
+                <div class="location">
+
+                    <span class="location-icon">
+                        📍
+                    </span>
+
+                    <div>
+
+                        <h2 id="cityName">
+                            City
+                        </h2>
+
+                        <p id="countryName">
+                            Country
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="weather-main">
+
+                    <div>
+
+                        <p class="today-label">
+                            TODAY
+                        </p>
+
+                        <div class="temperature">
+                            <span id="temperature">--</span>°
+                        </div>
+
+                        <h3 id="condition">
+                            --
+                        </h3>
+
+                        <p id="description">
+                            --
+                        </p>
+
+                    </div>
+
+
+                    <div class="weather-icon-container">
+
+                        <img
+                            id="weatherIcon"
+                            src=""
+                            alt="Weather"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- SUNRISE / SUNSET -->
+                <div class="sun-info">
+
+                    <div>
+
+                        <span>🌅</span>
+
+                        <div>
+
+                            <small>
+                                Sunrise
+                            </small>
+
+                            <strong id="sunrise">
+                                --:--
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>🌇</span>
+
+                        <div>
+
+                            <small>
+                                Sunset
+                            </small>
+
+                            <strong id="sunset">
+                                --:--
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WEATHER STATISTICS -->
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🌡️
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Feels Like
+                        </span>
+
+                        <strong>
+                            <span id="feelsLike">
+                                --
+                            </span>°C
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        💧
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Humidity
+                        </span>
+
+                        <strong>
+                            <span id="humidity">
+                                --
+                            </span>%
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        💨
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Wind Speed
+                        </span>
+
+                        <strong>
+                            <span id="wind">
+                                --
+                            </span>
+                            km/h
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        👁️
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Visibility
+                        </span>
+
+                        <strong>
+                            <span id="visibility">
+                                --
+                            </span>
+                            km
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- 5 DAY FORECAST -->
+            <div class="forecast-section">
+
+                <div class="section-heading">
+
+                    <p class="small-title">
+                        UPCOMING
+                    </p>
+
+                    <h2>
+                        5-Day Forecast
+                    </h2>
+
+                </div>
+
+
+                <div
+                    id="forecastContainer"
+                    class="forecast-container">
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- WELCOME SCREEN -->
+        <section
+            id="welcomeScreen"
+            class="welcome-screen">
+
+            <div class="welcome-icon">
+                🌤️
+            </div>
+
+            <h2>
+                Search for a city
+            </h2>
+
+            <p>
+                Enter any city above to see its
+                current weather, conditions and forecast.
+            </p>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <p>
+                WeatherX • Powered by OpenWeather
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
