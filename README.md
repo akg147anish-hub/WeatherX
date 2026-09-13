@@ -35,6 +35,8 @@ A modern and responsive weather dashboard that provides real-time weather inform
 
 The dashboard displays current weather conditions along with additional weather details and a 5-day forecast.
 
+![WeatherX Dashboard](Screenshot/weatherx-dashboard.png)
+
 ## 📁 Project Structure
 
 ```text
